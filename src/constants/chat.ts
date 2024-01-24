@@ -37,7 +37,7 @@ export const modelOptions: ModelOptions[] = [
   'llama-2-7b-instruct',
   'llama-2-70b-instruct',
   'mistral-7b-instruct',
-  'mistral-8x7b-instruct',
+  'mistral-8x7b-instruct'
 ];
 
 export const defaultModel = 'gpt-3.5-turbo';
