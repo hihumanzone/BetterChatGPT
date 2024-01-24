@@ -49,26 +49,7 @@ export interface Folder {
   color?: string;
 }
 
-export type ModelOptions =
-  'claude-instant-1.2' |
-  'claude-2.1' |
-  'codellama-34b-instruct' |
-  'gpt-3.5-turbo' |
-  'gpt-3.5-turbo-0301' |
-  'gpt-3.5-turbo-0613' |
-  'gpt-3.5-turbo-1106' |
-  'gpt-3.5-turbo-16k' |
-  'gpt-4' |
-  'gpt-4-0314' |
-  'gpt-4-0613' |
-  'gpt-4-turbo' |
-  'gpt-4-browsing' |
-  'gpt-4-turbo-vision-preview' |
-  'llama-2-13b-instruct' |
-  'llama-2-7b-instruct' |
-  'llama-2-70b-instruct' |
-  'mistral-7b-instruct' |
-  'mistral-8x7b-instruct';
+export type ModelOptions = 'claude-instant-1.2' | 'claude-2.1' | 'codellama-34b-instruct' | 'gpt-3.5-turbo' | 'gpt-3.5-turbo-0301' | 'gpt-3.5-turbo-0613' | 'gpt-3.5-turbo-1106' | 'gpt-3.5-turbo-16k' | 'gpt-4' | 'gpt-4-0314' | 'gpt-4-0613' | 'gpt-4-turbo' | 'gpt-4-browsing' | 'gpt-4-turbo-vision-preview' | 'llama-2-13b-instruct' | 'llama-2-7b-instruct' | 'llama-2-70b-instruct' | 'mistral-7b-instruct' | 'mistral-8x7b-instruct';
 
 export type TotalTokenUsed = {
   [model in ModelOptions]?: {
