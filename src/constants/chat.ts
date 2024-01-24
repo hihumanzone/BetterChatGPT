@@ -10,7 +10,6 @@ const dateString =
   '-' +
   ('0' + date.getDate()).slice(-2);
 
-// default system message obtained using the following method: https://twitter.com/DeminDimin/status/1619935545144279040
 export const _defaultSystemMessage =
   import.meta.env.VITE_DEFAULT_SYSTEM_MESSAGE ??
   `You are ChatGPT, a large language model trained by OpenAI.
@@ -18,89 +17,43 @@ Carefully heed the user's instructions.
 Respond using Markdown.`;
 
 export const modelOptions: ModelOptions[] = [
+  'claude-instant-1.2',
+  'claude-2.1',
+  'codellama-34b-instruct',
   'gpt-3.5-turbo',
-  'gpt-3.5-turbo-16k',
+  'gpt-3.5-turbo-0301',
+  'gpt-3.5-turbo-0613',
   'gpt-3.5-turbo-1106',
+  'gpt-3.5-turbo-16k',
   'gpt-4',
-  'gpt-4-32k',
-  'gpt-4-1106-preview'
-  // 'gpt-3.5-turbo-0301',
-  // 'gpt-4-0314',
-  // 'gpt-4-32k-0314',
+  'gpt-4-0314',
+  'gpt-4-0613',
+  'gpt-4-turbo',
+  'gpt-4-browsing',
+  'gpt-4-turbo-vision-preview',
+  'llama-2-13b-instruct',
+  'llama-2-7b-instruct',
+  'llama-2-70b-instruct',
+  'mistral-7b-instruct',
+  'mistral-8x7b-instruct',
 ];
 
 export const defaultModel = 'gpt-3.5-turbo';
 
-export const modelMaxToken = {
-  'gpt-3.5-turbo': 4096,
-  'gpt-3.5-turbo-0301': 4096,
-  'gpt-3.5-turbo-0613': 4096,
-  'gpt-3.5-turbo-16k': 16384,
-  'gpt-3.5-turbo-16k-0613': 16384,
-  'gpt-3.5-turbo-1106': 16384,
-  'gpt-4': 8192,
-  'gpt-4-0314': 8192,
-  'gpt-4-0613': 8192,
-  'gpt-4-32k': 32768,
-  'gpt-4-32k-0314': 32768,
-  'gpt-4-32k-0613': 32768,
-  'gpt-4-1106-preview': 128000,
-};
+const sixteenK = 16384;
 
-export const modelCost = {
-  'gpt-3.5-turbo': {
-    prompt: { price: 0.0015, unit: 1000 },
-    completion: { price: 0.002, unit: 1000 },
-  },
-  'gpt-3.5-turbo-0301': {
-    prompt: { price: 0.0015, unit: 1000 },
-    completion: { price: 0.002, unit: 1000 },
-  },
-  'gpt-3.5-turbo-0613': {
-    prompt: { price: 0.0015, unit: 1000 },
-    completion: { price: 0.002, unit: 1000 },
-  },
-  'gpt-3.5-turbo-16k': {
-    prompt: { price: 0.003, unit: 1000 },
-    completion: { price: 0.004, unit: 1000 },
-  },
-  'gpt-3.5-turbo-16k-0613': {
-    prompt: { price: 0.003, unit: 1000 },
-    completion: { price: 0.004, unit: 1000 },
-  },
-  'gpt-3.5-turbo-1106': {
-    prompt: { price: 0.001, unit: 1000 },
-    completion: { price: 0.0015, unit: 1000 },
-  },
-  'gpt-4': {
-    prompt: { price: 0.03, unit: 1000 },
-    completion: { price: 0.06, unit: 1000 },
-  },
-  'gpt-4-0314': {
-    prompt: { price: 0.03, unit: 1000 },
-    completion: { price: 0.06, unit: 1000 },
-  },
-  'gpt-4-0613': {
-    prompt: { price: 0.03, unit: 1000 },
-    completion: { price: 0.06, unit: 1000 },
-  },
-  'gpt-4-32k': {
-    prompt: { price: 0.06, unit: 1000 },
-    completion: { price: 0.12, unit: 1000 },
-  },
-  'gpt-4-32k-0314': {
-    prompt: { price: 0.06, unit: 1000 },
-    completion: { price: 0.12, unit: 1000 },
-  },
-  'gpt-4-32k-0613': {
-    prompt: { price: 0.06, unit: 1000 },
-    completion: { price: 0.12, unit: 1000 },
-  },
-  'gpt-4-1106-preview': {
-    prompt: { price: 0.01, unit: 1000 },
-    completion: { price: 0.03, unit: 1000 },
-  },
-};
+export const modelMaxToken = modelOptions.reduce((acc, modelId) => {
+  acc[modelId] = sixteenK;
+  return acc;
+}, {});
+
+export const modelCost = modelOptions.reduce((acc, modelId) => {
+  acc[modelId] = {
+    prompt: { price: 0.002, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 }
+  };
+  return acc;
+}, {});
 
 export const defaultUserMaxToken = 4000;
 
