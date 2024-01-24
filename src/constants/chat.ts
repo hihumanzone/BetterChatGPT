@@ -18,8 +18,6 @@ Respond using Markdown.`;
 
 export const modelOptions: ModelOptions[] = [
   'claude-instant-1.2',
-  'clexport const modelOptions: ModelOptions[] = [
-  'claude-instant-1.2',
   'claude-2.1',
   'codellama-34b-instruct',
   'gpt-3.5-turbo',
