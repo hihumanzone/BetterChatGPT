@@ -16,7 +16,9 @@ export const _defaultSystemMessage =
 Carefully heed the user's instructions. 
 Respond using Markdown.`;
 
-modelOptions: ModelOptions[] = [
+export const modelOptions: ModelOptions[] = [
+  'claude-instant-1.2',
+  'clexport const modelOptions: ModelOptions[] = [
   'claude-instant-1.2',
   'claude-2.1',
   'codellama-34b-instruct',
