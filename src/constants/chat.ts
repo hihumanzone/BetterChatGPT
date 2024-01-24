@@ -4,8 +4,13 @@ import useStore from '@store/store';
 
 const date = new Date();
 const dateString =
-  `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+  date.getFullYear() +
+  '-' +
+  ('0' + (date.getMonth() + 1)).slice(-2) +
+  '-' +
+  ('0' + date.getDate()).slice(-2);
 
+// default system message obtained using the following method: https://twitter.com/DeminDimin/status/1619935545144279040
 export const _defaultSystemMessage =
   import.meta.env.VITE_DEFAULT_SYSTEM_MESSAGE ??
   `You are ChatGPT, a large language model trained by OpenAI.
@@ -36,20 +41,106 @@ export const modelOptions: ModelOptions[] = [
 
 export const defaultModel = 'gpt-3.5-turbo';
 
-const sixteenK = 16384;
+export const modelMaxToken = {
+  'claude-instant-1.2': 16384,
+  'claude-2.1': 16384,
+  'codellama-34b-instruct': 16384,
+  'gpt-3.5-turbo': 16384,
+  'gpt-3.5-turbo-0301': 16384,
+  'gpt-3.5-turbo-0613': 16384,
+  'gpt-3.5-turbo-1106': 16384,
+  'gpt-3.5-turbo-16k': 16384,
+  'gpt-4': 16384,
+  'gpt-4-0314': 16384,
+  'gpt-4-0613': 16384,
+  'gpt-4-turbo': 16384,
+  'gpt-4-browsing': 16384,
+  'gpt-4-turbo-vision-preview': 16384,
+  'llama-2-13b-instruct': 16384,
+  'llama-2-7b-instruct': 16384,
+  'llama-2-70b-instruct': 16384,
+  'mistral-7b-instruct': 16384,
+  'mistral-8x7b-instruct': 16384
+};
 
-export const modelMaxToken = modelOptions.reduce((acc, modelId) => {
-  acc[modelId] = sixteenK; // Assuming all models have the same max tokens for simplicity
-  return acc;
-}, {});
-
-export const modelCost = modelOptions.reduce((acc, modelId) => {
-  acc[modelId] = { // Assuming all models have the same cost for simplicity
-    prompt: { price: 0.002, unit: 1000 },
-    completion: { price: 0.002, unit: 1000 } 
-  };
-  return acc;
-}, {});
+export const modelCost = {
+  'claude-instant-1.2': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'claude-2.1': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'codellama-34b-instruct': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'gpt-3.5-turbo': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'gpt-3.5-turbo-0301': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'gpt-3.5-turbo-0613': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'gpt-3.5-turbo-1106': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'gpt-3.5-turbo-16k': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'gpt-4': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'gpt-4-0314': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'gpt-4-0613': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'gpt-4-turbo': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'gpt-4-browsing': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'gpt-4-turbo-vision-preview': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'llama-2-13b-instruct': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'llama-2-7b-instruct': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'llama-2-70b-instruct': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'mistral-7b-instruct': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  },
+  'mistral-8x7b-instruct': {
+    prompt: { price: 0.0015, unit: 1000 },
+    completion: { price: 0.002, unit: 1000 },
+  }
+};
 
 export const defaultUserMaxToken = 4000;
 
@@ -67,10 +158,11 @@ export const generateDefaultChat = (
   folder?: string
 ): ChatInterface => ({
   id: uuidv4(),
-  title: title || 'New Chat',
-  messages: useStore.getState().defaultSystemMessage.length > 0
-    ? [{ role: 'system', content: useStore.getState().defaultSystemMessage }]
-    : [],
+  title: title ? title : 'New Chat',
+  messages:
+    useStore.getState().defaultSystemMessage.length > 0
+      ? [{ role: 'system', content: useStore.getState().defaultSystemMessage }]
+      : [],
   config: { ...useStore.getState().defaultChatConfig },
   titleSet: false,
   folder,
