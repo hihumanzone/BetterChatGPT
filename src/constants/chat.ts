@@ -4,11 +4,7 @@ import useStore from '@store/store';
 
 const date = new Date();
 const dateString =
-  date.getFullYear() +
-  '-' +
-  ('0' + (date.getMonth() + 1)).slice(-2) +
-  '-' +
-  ('0' + date.getDate()).slice(-2);
+  `${date.getFullYear()}-${('0' + (date.getMonth() + 1)).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
 
 export const _defaultSystemMessage =
   import.meta.env.VITE_DEFAULT_SYSTEM_MESSAGE ??
@@ -43,14 +39,14 @@ export const defaultModel = 'gpt-3.5-turbo';
 const sixteenK = 16384;
 
 export const modelMaxToken = modelOptions.reduce((acc, modelId) => {
-  acc[modelId] = sixteenK;
+  acc[modelId] = sixteenK; // Assuming all models have the same max tokens for simplicity
   return acc;
 }, {});
 
 export const modelCost = modelOptions.reduce((acc, modelId) => {
-  acc[modelId] = {
+  acc[modelId] = { // Assuming all models have the same cost for simplicity
     prompt: { price: 0.002, unit: 1000 },
-    completion: { price: 0.002, unit: 1000 }
+    completion: { price: 0.002, unit: 1000 } 
   };
   return acc;
 }, {});
@@ -71,11 +67,10 @@ export const generateDefaultChat = (
   folder?: string
 ): ChatInterface => ({
   id: uuidv4(),
-  title: title ? title : 'New Chat',
-  messages:
-    useStore.getState().defaultSystemMessage.length > 0
-      ? [{ role: 'system', content: useStore.getState().defaultSystemMessage }]
-      : [],
+  title: title || 'New Chat',
+  messages: useStore.getState().defaultSystemMessage.length > 0
+    ? [{ role: 'system', content: useStore.getState().defaultSystemMessage }]
+    : [],
   config: { ...useStore.getState().defaultChatConfig },
   titleSet: false,
   folder,
